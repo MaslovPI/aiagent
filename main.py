@@ -3,6 +3,7 @@ import argparse
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from prompts import system_prompt
 
 
 def main():
@@ -24,6 +25,7 @@ def main():
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=messages,
+        config=types.GenerateContentConfig(system_instruction=system_prompt),
     )
     if response.usage_metadata is None:
         raise RuntimeError("API request has failed, metadata is empty")
