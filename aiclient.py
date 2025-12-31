@@ -15,7 +15,7 @@ class AiClient:
         self.client = genai.Client(api_key=self.api_key)
         self.log = log
 
-    def __prompt_for_response__(self, messages):
+    def __prompt_for_response(self, messages):
         return self.client.models.generate_content(
             model="gemini-2.5-flash",
             contents=messages,
@@ -27,14 +27,14 @@ class AiClient:
     def interact(self, prompt, verbose):
         messages = [types.Content(role="user", parts=[types.Part(text=prompt)])]
         for _ in range(MAX_ITERATIONS):
-            (is_done, messages) = self.__loop__(messages, verbose)
+            (is_done, messages) = self.__loop(messages, verbose)
             if is_done:
                 return True
         return False
 
-    def __loop__(self, messages, verbose):
+    def __loop(self, messages, verbose):
         local_messages = messages.copy()
-        response = self.__prompt_for_response__(local_messages)
+        response = self.__prompt_for_response(local_messages)
 
         if response.usage_metadata is None:
             raise RuntimeError("API request has failed, metadata is empty")
