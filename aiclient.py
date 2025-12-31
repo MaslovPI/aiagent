@@ -29,7 +29,7 @@ class AiClient:
         for _ in range(MAX_ITERATIONS):
             (is_done, messages) = self.__loop__(messages, verbose)
             if is_done:
-                return (True,)
+                return True
         return False
 
     def __loop__(self, messages, verbose):
