@@ -29,7 +29,7 @@ class AiClient:
         for _ in range(MAX_ITERATIONS):
             (is_done, messages) = self.__loop__(messages, verbose)
             if is_done:
-                return True
+                return (True,)
         return False
 
     def __loop__(self, messages, verbose):
@@ -51,11 +51,8 @@ class AiClient:
                 if candidate.content:
                     local_messages.append(candidate.content)
 
-        self.log("Response:")
         if response.function_calls is None:
-            self.log(response.text)
-
-        if response.function_calls is None:
+            self.log("Response:")
             self.log(response.text)
             return (True, local_messages)
 
