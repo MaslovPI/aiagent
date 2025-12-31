@@ -1,4 +1,3 @@
-from os import wait
 from google.genai import types
 from functions.get_file_content import get_file_content, schema_get_file_content
 from functions.get_files_info import get_files_info, schema_get_files_info
@@ -15,11 +14,11 @@ available_functions = types.Tool(
 )
 
 
-def call_function(function_call, verbose=False):
+def call_function(function_call, log, verbose=False):
     if verbose:
-        print(f"Calling function: {function_call.name}({function_call.args})")
+        log(f"Calling function: {function_call.name}({function_call.args})")
     else:
-        print(f" - Calling function: {function_call.name}")
+        log(f" - Calling function: {function_call.name}")
 
     function_map = {
         "get_file_content": get_file_content,

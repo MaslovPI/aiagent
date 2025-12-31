@@ -1,7 +1,10 @@
 import argparse
+import sys
+
 from dotenv import load_dotenv
+
 from aiclient import AiClient
-from call_function import call_function
+from config import MAX_ITERATIONS
 
 
 def main():
@@ -15,7 +18,13 @@ def main():
     args = parser.parse_args()
     prompt = args.user_prompt
     verbose = args.verbose
-    ai_client.interact(prompt, verbose)
+
+    if verbose:
+        print(f"User prompt: {prompt}")
+
+    if not ai_client.interact(prompt, verbose):
+        print(f"Maximum iterations ({MAX_ITERATIONS}) reached")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
